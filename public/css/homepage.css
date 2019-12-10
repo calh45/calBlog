@@ -1,0 +1,47 @@
+.formContainer {
+    border-bottom: 1px solid grey;
+    width: 100%;
+    height: 90px;
+}
+
+.postInput {
+    width: 100%;
+    height: 50px;
+}
+
+.postButton {
+    float: right;
+}
+
+.postContainer {
+    border: 1px solid grey;
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+.postHeader {
+    background-color: lightgrey;
+    width: 100%;
+}
+
+.postName {
+    font-size: 20px;
+}
+
+.postDate {
+    float: right;
+    font-size: 15px;
+    color: whitesmoke;
+}
+
+.commentsAndDeleteButton {
+    float: right;
+}
+
+.commentBox {
+    border: 1px solid black;
+    width: 100%;
+    margin-bottom: 4px;
+    margin-top: 4px;
+}
