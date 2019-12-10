@@ -22,7 +22,7 @@ class PostController extends Controller
             $imageModelToSave->save();
 
             $newPost = new Post();
-            $newPost->userId = Auth::user()->getAuthIdentifier();
+            $newPost->user_Id = Auth::user()->getAuthIdentifier();
             $newPost->postType = "image";
             $newPost->content = $request->input("postContent");
             $newPost->image_id = $imageModelToSave->id;
@@ -30,7 +30,7 @@ class PostController extends Controller
 
         }else {
             $newPost = new Post();
-            $newPost->userId = Auth::user()->getAuthIdentifier();
+            $newPost->user_Id = Auth::user()->getAuthIdentifier();
             $newPost->postType = "written";
             $newPost->content = $request->input("postContent");
             $newPost->image_id = null;

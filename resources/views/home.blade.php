@@ -41,7 +41,7 @@
                                 {{ $currentComment->user->name }} - {{ $currentComment->created_at }}
                             </div>
                             <div class="commentBox"> {{ $currentComment->content }} </div>
-                            @if($currentComment->userId == $currentLoggedIn->id)
+                            @if($currentComment->user_id == $currentLoggedIn->id)
                                 <button> Edit </button>
                                 <form method="post" action="{{ route("comment.delete") }}">
                                     {{ csrf_field() }}
@@ -59,7 +59,7 @@
                             </div>
                         </form>
 
-                        @if($currentPost->userId == $currentLoggedIn->id)
+                        @if($currentPost->user_id == $currentLoggedIn->id)
                             <button> Edit </button>
                             <form method="post" action="{{ route("post.delete") }}">
                                 {{ csrf_field() }}

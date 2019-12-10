@@ -42,7 +42,7 @@ class User extends Authenticatable
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function posts() {
-        return $this->hasMany("App\Post", "userId", "id");
+        return $this->hasMany("App\Post", "user_id", "id");
     }
 
     /**
@@ -50,6 +50,6 @@ class User extends Authenticatable
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function comments() {
-        return $this->hasMany("App\Comment", "userId", "id");
+        return $this->hasMany("App\Comment", "user_id", "id");
     }
 }
