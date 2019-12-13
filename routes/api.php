@@ -16,3 +16,7 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('comments/{postId}', "CommentController@apiIndex")->name('api.comments.index');
+
+Route::post('comments/{postId}/{userId}', 'CommentController@apiCreate')->name('api.comments.create');

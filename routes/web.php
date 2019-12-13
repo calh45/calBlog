@@ -23,6 +23,8 @@ Route::post('/deleteComment', 'CommentController@delete')->name("comment.delete"
 
 Route::post('/deletePost', 'PostController@delete')->name("post.delete");
 
+Route::get('/post/{id}', 'PostController@index')->name("post.index");
+
 Route::post('/createComment/', 'CommentController@create')->name('comment.create');
 
 Route::post('/createPost', 'PostController@create')->name('post.create');

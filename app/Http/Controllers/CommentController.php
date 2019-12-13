@@ -9,6 +9,23 @@ use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
+    public function apiIndex($postId) {
+        $commentsToReturn = Comment::all()->where("post_id", $postId);
+
+        return $commentsToReturn;
+
+    }
+
+    public function apiCreate(Request $request, $postId, $userId) {
+        $newComment = new Comment();
+        $newComment->user_id = $userId;
+        $newComment->post_id = $postId;
+        $newComment->content = $request["name"];
+        $newComment->save();
+
+        return $newComment;
+    }
+
     public function create(Request $request) {
         $newComment = new Comment();
         $newComment->userId = Auth::user()->getAuthIdentifier();

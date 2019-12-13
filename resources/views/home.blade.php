@@ -1,6 +1,4 @@
-
 <link href="{{ asset('css/homepage.css') }}" rel="stylesheet">
-
 @extends('layouts.app')
 
 @section('content')
@@ -35,6 +33,7 @@
                         @if($currentPost->postType == "image")
                             <img src="/images/{{ $currentPost->image->fileName }}" alt="Image">
                         @endif
+
                         <div>Comments: </div>
                         @foreach($currentPost->comments as $currentComment)
                             <div>
@@ -50,14 +49,9 @@
                                 </form>
                             @endif
                         @endforeach
-                        <form method="POST" action={{ route("comment.create") }}>
-                            {{ csrf_field() }}
-                            <input name="postId" type="hidden" value={{ $currentPost->id }}>
-                            <input class="commentBox" id="enteredComment" name="enteredComment" type="text" placeholder="Write a comment...">
-                            <div class="commentsAndDeleteButton">
-                                <button type="submit"> Comment </button>
-                            </div>
-                        </form>
+                        <a href=" {{ route("post.index",["id" => $currentPost->id]) }}">
+                            <button class="commentsAndDeleteButton"> Comment </button>
+                        </a>
 
                         @if($currentPost->user_id == $currentLoggedIn->id)
                             <button> Edit </button>
@@ -80,10 +74,16 @@
                     @endif
 
                     You are logged in!
+                    <div id="root">
+
+
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 @endsection
+
 

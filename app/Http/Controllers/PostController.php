@@ -10,6 +10,16 @@ use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
+    public function index($id) {
+        $postToReturn = Post::all()->where("id", $id)->first();
+        $commentsToReturn = $postToReturn->comments;
+        $currentLoggedIn = Auth::user();
+
+        return view("PostHome", ["postToReturn" => $postToReturn, "commentsToReturn" => $commentsToReturn, "currentLoggedIn" => $currentLoggedIn]);
+
+
+    }
+
     public function create(Request $request) {
         if($request->hasFile("imageSave")) {
             $destinationToSave = public_path("/images/");
