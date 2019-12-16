@@ -16,12 +16,13 @@
 .postContainer {
     border: 1px solid grey;
     width: 100%;
-    padding: 5px;
+    padding: 3px;
     margin-bottom: 5px;
 }
 
 .postHeader {
     background-color: lightgrey;
+    border-radius: 2px;
     width: 100%;
 }
 
@@ -35,13 +36,68 @@
     color: whitesmoke;
 }
 
+.postContent {
+    font-size: 30px;
+    margin-bottom: 10px;
+    left: 50%;
+
+}
+
 .commentsAndDeleteButton {
     float: right;
 }
 
 .commentBox {
     border: 1px solid black;
+    border-radius: 2px;
     width: 100%;
     margin-bottom: 4px;
     margin-top: 4px;
+}
+
+.commentsHeader {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    font-size: 15px;
+    padding: 4px;
+}
+
+.commentContainer {
+    margin: 2px;
+}
+
+.commentAdmin {
+    display: inline-block;
+    font-size: 10px;
+}
+
+.commentAdminEdit {
+    float: left;
+}
+
+.commentAdminDelete {
+    float: right;
+}
+
+.userAdmin {
+    border-top: 1px solid black;
+    width: 100%;
+    background: ghostwhite;
+    display: inline-block;
+    font-size: 10px;
+
+}
+.userAdminEdit {
+    float: left;
+    display: none;
+}
+
+.userAdminDelete {
+    float: right;
+    display: none;
+}
+
+.editToggle {
+    font-size: 10px;
+    float: right;
 }

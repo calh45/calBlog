@@ -21,6 +21,15 @@ class PostController extends Controller
 
     }
 
+    public function edit(Request $request) {
+        $newContent = $request->input("newPost");
+        Post::all()->where("id", $request->input("postId"))->first()->update(["content" => $newContent]);
+
+        $allPosts = Post::all();
+        $currentLoggedIn = Auth::user();
+        return view("/home", ["allPosts" => $allPosts, "currentLoggedIn" => $currentLoggedIn]);
+    }
+
     public function create(Request $request) {
         if($request->hasFile("imageSave")) {
             $destinationToSave = public_path("/images/");

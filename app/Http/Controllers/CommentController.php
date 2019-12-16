@@ -26,6 +26,17 @@ class CommentController extends Controller
         return $newComment;
     }
 
+    public function edit(Request $request) {
+        $commentToFind = $request->input("commentId");
+        $commentContent = $request->input("newComment");
+
+        Comment::all()->where("id", $commentToFind)->first()->update(["content" => $commentContent]);
+
+        $allPosts = Post::all();
+        $currentLoggedIn = Auth::user();
+        return view("/home", ["allPosts" => $allPosts, "currentLoggedIn" => $currentLoggedIn]);
+    }
+
     public function create(Request $request) {
         $newComment = new Comment();
         $newComment->userId = Auth::user()->getAuthIdentifier();

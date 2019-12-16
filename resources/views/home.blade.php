@@ -28,39 +28,78 @@
                                 </div>
                             </div>
                         </div>
-                        {{ $currentPost->content }}
 
-                        @if($currentPost->postType == "image")
-                            <img src="/images/{{ $currentPost->image->fileName }}" alt="Image">
-                        @endif
+                        <div class="postContent">
+                            {{ $currentPost->content }}
 
-                        <div>Comments: </div>
-                        @foreach($currentPost->comments as $currentComment)
-                            <div>
-                                {{ $currentComment->user->name }} - {{ $currentComment->created_at }}
-                            </div>
-                            <div class="commentBox"> {{ $currentComment->content }} </div>
-                            @if($currentComment->user_id == $currentLoggedIn->id)
-                                <button> Edit </button>
-                                <form method="post" action="{{ route("comment.delete") }}">
-                                    {{ csrf_field() }}
-                                    <input name="commentId" type="hidden" value={{ $currentComment->id }}>
-                                    <button type="submit"> Delete </button>
-                                </form>
+                            @if($currentPost->postType == "image")
+                                <img src="/images/{{ $currentPost->image->fileName }}" alt="Image">
                             @endif
-                        @endforeach
-                        <a href=" {{ route("post.index",["id" => $currentPost->id]) }}">
-                            <button class="commentsAndDeleteButton"> Comment </button>
-                        </a>
 
-                        @if($currentPost->user_id == $currentLoggedIn->id)
-                            <button> Edit </button>
-                            <form method="post" action="{{ route("post.delete") }}">
-                                {{ csrf_field() }}
-                                <input name="postId" type="hidden" value={{ $currentPost->id }}>
-                                <button type="submit"> Delete </button>
-                            </form>
-                        @endif
+
+                        </div>
+
+                        <div class="commentsHeader">
+                            Comments:
+
+                            <a href=" {{ route("post.index",["id" => $currentPost->id]) }}">
+                                <button class="commentsAndDeleteButton"> Comment </button>
+                            </a>
+                        </div>
+
+                        @foreach($currentPost->comments as $currentComment)
+                            <div class="commentContainer">
+                                <div>
+                                    {{ $currentComment->user->name }} - {{ $currentComment->created_at }}
+                                </div>
+                                <div class="commentBox"> {{ $currentComment->content }} </div>
+                                @if($currentComment->user_id == $currentLoggedIn->id)
+                                    <div class="commentAdmin">
+                                        <div class="commentAdminEdit">
+                                            <form method="post" action="{{ route("comment.edit") }}">
+                                                {{ csrf_field() }}
+                                                <input name="commentId" type="hidden" value={{ $currentComment->id }}>
+                                                <button> Edit Comment </button>
+                                                <input name="newComment" id="newComment" placeholder="{{ $currentComment->content }}">
+                                            </form>
+                                        </div>
+
+                                        <div class="commentAdminDelete">
+                                            <form method="post" action="{{ route("comment.delete") }}">
+                                                {{ csrf_field() }}
+                                                <input name="commentId" type="hidden" value={{ $currentComment->id }}>
+                                                <button type="submit"> Delete Comment</button>
+                                            </form>
+                                        </div>
+
+                                    </div>
+                                @endif
+                            </div>
+
+                        @endforeach
+
+
+                            @if($currentPost->user_id == $currentLoggedIn->id)
+                                <div class="userAdmin" id="userAdmin">
+                                    <button class="editToggle" onclick="toggle({{ $currentPost->id }})">Edit Post</button>
+                                    <div id="{{ $currentPost->id }}editId" class="userAdminEdit">
+                                        <form method="post" action="{{ route("post.edit") }}">
+                                            {{ csrf_field() }}
+                                            <input name="postId" type="hidden" value={{ $currentPost->id }}>
+                                            <input name="newPost" id="newPost" placeholder="{{ $currentPost->content }}">
+                                            <button type="submit"> Edit Post </button>
+                                        </form>
+                                    </div>
+
+                                    <div id="{{ $currentPost->id }}deleteId" class="userAdminDelete">
+                                        <form method="post" action="{{ route("post.delete") }}">
+                                            {{ csrf_field() }}
+                                            <input name="postId" type="hidden" value={{ $currentPost->id }}>
+                                            <button type="submit"> Delete Post </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            @endif
 
                     </div>
 
@@ -83,6 +122,21 @@
         </div>
     </div>
 </div>
+
+<script>
+    function toggle($thisId) {
+        var toCheckEditId = $thisId.toString()+"editId";
+        var toCheckDeleteId = $thisId.toString()+"deleteId";
+
+        if (document.getElementById(toCheckEditId).style.display === "none") {
+            document.getElementById(toCheckEditId).style.display = "block";
+            document.getElementById(toCheckDeleteId).style.display = "block";
+        } else {
+            document.getElementById(toCheckEditId).style.display = "none";
+            document.getElementById(toCheckDeleteId).style.display = "none";
+        }
+    }
+</script>
 
 @endsection
 

@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
+
+    protected $fillable = [
+        "content"
+    ];
+
     /**
      * A Comment can only have one corresponding User author. Completes one-to-many relationship.
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

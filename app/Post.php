@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
 
+    protected $fillable = [
+        "content"
+    ];
     /**
      * A Post can only have been created by one user. Completes one-to-many relationship.
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
