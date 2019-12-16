@@ -14,8 +14,9 @@ class PostController extends Controller
         $postToReturn = Post::all()->where("id", $id)->first();
         $commentsToReturn = $postToReturn->comments;
         $currentLoggedIn = Auth::user();
+        $currentLoggedInId = $currentLoggedIn->id;
 
-        return view("PostHome", ["postToReturn" => $postToReturn, "commentsToReturn" => $commentsToReturn, "currentLoggedIn" => $currentLoggedIn]);
+        return view("PostHome", ["postToReturn" => $postToReturn, "commentsToReturn" => $commentsToReturn, "currentLoggedIn" => $currentLoggedIn, "currentLoggedInId" => $currentLoggedInId]);
 
 
     }

@@ -115,10 +115,14 @@
             },
             methods: {
                 createComment: function () {
-                    axios.post("{{ route('api.comments.create', ["postId" => $postToReturn->id, "userId" => $postToReturn->user_id]) }}", {
+                    axios.post("{{ route('api.comments.create', ["postId" => $postToReturn->id, "userId" => $currentLoggedInId]) }}", {
                         name: this.content
                     }).then(response => {
-                        this.comments.push(response.data);
+                        axios.get("{{ route('api.comments.index', ["postId" => $postToReturn->id]) }}").then(response => {
+                            this.comments = response.data;
+                        }).catch(response => {
+                            console.log(response);
+                        })
                         this.content = '';
                     }).catch(response => {
                         console.log(response);
