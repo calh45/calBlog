@@ -32,7 +32,7 @@ class CommentController extends Controller
 
         Comment::all()->where("id", $commentToFind)->first()->update(["content" => $commentContent]);
 
-        $allPosts = Post::all();
+        $allPosts = Post::paginate(10);
         $currentLoggedIn = Auth::user();
         return view("/home", ["allPosts" => $allPosts, "currentLoggedIn" => $currentLoggedIn]);
     }
@@ -44,7 +44,7 @@ class CommentController extends Controller
         $newComment->content = $request->input("enteredComment");
         $newComment->save();
 
-        $allPosts = Post::all();
+        $allPosts = Post::paginate(10);
         $currentLoggedIn = Auth::user();
         return view("/home", ["allPosts" => $allPosts, "currentLoggedIn" => $currentLoggedIn]);
 
@@ -55,7 +55,7 @@ class CommentController extends Controller
         $toDelete = Comment::all()->where("id", $commentId)->first();
         $toDelete->delete();
 
-        $allPosts = Post::all();
+        $allPosts = Post::paginate(10);
         $currentLoggedIn = Auth::user();
         return view("/home", ["allPosts" => $allPosts, "currentLoggedIn" => $currentLoggedIn]);
     }

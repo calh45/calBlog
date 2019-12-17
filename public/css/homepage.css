@@ -4,6 +4,12 @@
     height: 90px;
 }
 
+.adminAlert {
+    font-size: 11px;
+    color: red;
+    float: left;
+}
+
 .postInput {
     width: 100%;
     height: 50px;

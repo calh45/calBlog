@@ -25,7 +25,7 @@ class PostController extends Controller
         $newContent = $request->input("newPost");
         Post::all()->where("id", $request->input("postId"))->first()->update(["content" => $newContent]);
 
-        $allPosts = Post::all();
+        $allPosts = Post::paginate(10);
         $currentLoggedIn = Auth::user();
         return view("/home", ["allPosts" => $allPosts, "currentLoggedIn" => $currentLoggedIn]);
     }
@@ -59,7 +59,7 @@ class PostController extends Controller
         }
 
 
-        $allPosts = Post::all();
+        $allPosts = Post::paginate(10);
         $currentLoggedIn = Auth::user();
         return view("/home", ["allPosts" => $allPosts, "currentLoggedIn" => $currentLoggedIn]);
 
@@ -70,7 +70,7 @@ class PostController extends Controller
         $toDelete = Post::all()->where("id", $postId)->first();
         $toDelete->delete();
 
-        $allPosts = Post::all();
+        $allPosts = Post::paginate(10);
         $currentLoggedIn = Auth::user();
         return view("/home", ["allPosts" => $allPosts, "currentLoggedIn" => $currentLoggedIn]);
     }

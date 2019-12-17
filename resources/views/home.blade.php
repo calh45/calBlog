@@ -23,6 +23,10 @@
                         <div class="postHeader">
                             <div class="postName">
                                 {{ $currentPost->user->name }}
+                                @if($currentPost->user->isAdmin == "admin")
+                                    <div class="adminAlert">[ADMIN]</div>
+
+                                @endif
                                 <div class="postDate">
                                     {{ $currentPost->created_at }}
                                 </div>
@@ -51,6 +55,9 @@
                             <div class="commentContainer">
                                 <div>
                                     {{ $currentComment->user->name }} - {{ $currentComment->created_at }}
+                                    @if($currentPost->user->isAdmin == "admin")
+                                        - [ADMIN]
+                                    @endif
                                 </div>
                                 <div class="commentBox"> {{ $currentComment->content }} </div>
                                 @if($currentComment->user_id == $currentLoggedIn->id)
@@ -100,10 +107,11 @@
                                     </div>
                                 </div>
                             @endif
-
                     </div>
-
                 @endforeach
+
+                {{ $allPosts->links() }}
+
 
                 <div class="card-body">
                     @if (session('status'))

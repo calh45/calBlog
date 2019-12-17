@@ -28,7 +28,7 @@ class HomeController extends Controller
     public function index() {
 
         $user = Auth::user();
-        $allPosts = Post::all()->sortByDesc("created_at");
+        $allPosts = Post::paginate(10);
 
         return view('home', ['currentLoggedIn' => $user, "allPosts" => $allPosts]);
     }
