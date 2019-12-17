@@ -34,7 +34,7 @@ class CommentController extends Controller
 
         $allPosts = Post::paginate(10);
         $currentLoggedIn = Auth::user();
-        return view("/home", ["allPosts" => $allPosts, "currentLoggedIn" => $currentLoggedIn]);
+        return view("home", ["allPosts" => $allPosts, "currentLoggedIn" => $currentLoggedIn]);
     }
 
     public function create(Request $request) {
@@ -46,7 +46,7 @@ class CommentController extends Controller
 
         $allPosts = Post::paginate(10);
         $currentLoggedIn = Auth::user();
-        return view("/home", ["allPosts" => $allPosts, "currentLoggedIn" => $currentLoggedIn]);
+        return view("home", ["allPosts" => $allPosts, "currentLoggedIn" => $currentLoggedIn]);
 
     }
 
@@ -57,6 +57,6 @@ class CommentController extends Controller
 
         $allPosts = Post::paginate(10);
         $currentLoggedIn = Auth::user();
-        return view("/home", ["allPosts" => $allPosts, "currentLoggedIn" => $currentLoggedIn]);
+        return view("home", ["allPosts" => $allPosts, "currentLoggedIn" => $currentLoggedIn]);
     }
 }
