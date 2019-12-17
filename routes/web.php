@@ -32,3 +32,5 @@ Route::post('/editComment', 'CommentController@edit')->name('comment.edit');
 Route::post('/createPost', 'PostController@create')->name('post.create');
 
 Route::post('/editPost', 'PostController@edit')->name('post.edit');
+
+Route::get("/activity", "ActivityController@index")->name("activity");

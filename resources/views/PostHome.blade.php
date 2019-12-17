@@ -57,6 +57,12 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
+                    @if($errors->any())
+                        @foreach($errors->all() as $error)
+                            <p class="errorMessage"> <b> {{ $error }} </b></p>
+                        @endforeach
+
+                    @endif
                     <div class="postContainer">
                         <div class="postHeader">
                             <div class="postName">

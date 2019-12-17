@@ -22,7 +22,10 @@ class PostController extends Controller
     }
 
     public function edit(Request $request) {
-        $newContent = $request->input("newPost");
+        $validatedData = $request->validate([
+            "newPost" => "required|string|min:1"
+        ]);
+        $newContent = $validatedData["newPost"];
         Post::all()->where("id", $request->input("postId"))->first()->update(["content" => $newContent]);
 
         $allPosts = Post::paginate(10);
@@ -31,6 +34,11 @@ class PostController extends Controller
     }
 
     public function create(Request $request) {
+
+        $validatedData = $request->validate([
+            "postContent" => "required|string|min:1"
+        ]);
+
         if($request->hasFile("imageSave")) {
             $destinationToSave = public_path("/images/");
             $imageToSave = $request->file('imageSave');
@@ -44,7 +52,7 @@ class PostController extends Controller
             $newPost = new Post();
             $newPost->user_Id = Auth::user()->getAuthIdentifier();
             $newPost->postType = "image";
-            $newPost->content = $request->input("postContent");
+            $newPost->content = $validatedData["postContent"];
             $newPost->image_id = $imageModelToSave->id;
             $newPost->save();
 
@@ -52,7 +60,7 @@ class PostController extends Controller
             $newPost = new Post();
             $newPost->user_Id = Auth::user()->getAuthIdentifier();
             $newPost->postType = "written";
-            $newPost->content = $request->input("postContent");
+            $newPost->content = $validatedData["postContent"];
             $newPost->image_id = null;
             $newPost->save();
 

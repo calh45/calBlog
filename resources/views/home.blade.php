@@ -7,6 +7,12 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">Dashboard</div>
+                @if($errors->any())
+                    @foreach($errors->all() as $error)
+                        <p class="errorMessage"> <b> {{ $error }} </b></p>
+                    @endforeach
+
+                @endif
                     <div class = "formContainer">
                         <form class="formStyle" method="POST" enctype="multipart/form-data" action={{ route("post.create") }}>
                             {{ csrf_field() }}
@@ -55,7 +61,7 @@
                             <div class="commentContainer">
                                 <div>
                                     {{ $currentComment->user->name }} - {{ $currentComment->created_at }}
-                                    @if($currentPost->user->isAdmin == "admin")
+                                    @if($currentComment->user->isAdmin == "admin")
                                         - [ADMIN]
                                     @endif
                                 </div>

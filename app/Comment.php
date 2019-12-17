@@ -27,4 +27,8 @@ class Comment extends Model
         return $this->belongsTo("App\Post", "post_id", "id");
     }
 
+    public function activity() {
+        return $this->hasOne("App\Activity", "post_id", "id");
+    }
+
 }

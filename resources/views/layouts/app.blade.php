@@ -57,6 +57,10 @@
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <p class="dropdown-item">Profile</p>
+                                    @if (\Illuminate\Support\Facades\Auth::user()->isAdmin === "admin")
+                                        <a class="dropdown-item" href="{{ route("activity") }}">User Activity</a>
+
+                                    @endif
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

@@ -17,18 +17,27 @@ class CommentController extends Controller
     }
 
     public function apiCreate(Request $request, $postId, $userId) {
+
+        $validatedData = $request->validate([
+            "name" => "required|string|min:1"
+        ]);
+
         $newComment = new Comment();
         $newComment->user_id = $userId;
         $newComment->post_id = $postId;
-        $newComment->content = $request["name"];
+        $newComment->content = $validatedData["name"];
         $newComment->save();
 
         return $newComment;
     }
 
     public function edit(Request $request) {
+        $validatedData = $request->validate([
+            "newComment" => "required|string|min:1"
+        ]);
+
         $commentToFind = $request->input("commentId");
-        $commentContent = $request->input("newComment");
+        $commentContent = $validatedData["newComment"];
 
         Comment::all()->where("id", $commentToFind)->first()->update(["content" => $commentContent]);
 
@@ -38,10 +47,14 @@ class CommentController extends Controller
     }
 
     public function create(Request $request) {
+        $validatedData = $request->validate([
+            "enteredComment" => "required|string|min:1"
+        ]);
+
         $newComment = new Comment();
         $newComment->userId = Auth::user()->getAuthIdentifier();
         $newComment->postId = $request->input("postId");
-        $newComment->content = $request->input("enteredComment");
+        $newComment->content = $validatedData["enteredComment"];
         $newComment->save();
 
         $allPosts = Post::paginate(10);
