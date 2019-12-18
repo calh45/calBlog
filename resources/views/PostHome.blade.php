@@ -1,5 +1,6 @@
 <link href="{{ asset('css/homepage.css') }}" rel="stylesheet">
-@extends('layouts.app')
+<link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
 
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
     <div class="container">
@@ -36,6 +37,10 @@
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <p class="dropdown-item">Profile</p>
+                            @if (\Illuminate\Support\Facades\Auth::user()->isAdmin === "admin")
+                                <a class="dropdown-item" href="{{ route("activity") }}">User Activity</a>
+
+                            @endif
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -81,7 +86,7 @@
                         <div>Comments: </div>
                         <div id="root">
                             <div v-for="comment in comments">
-                                @{{ comment.user_id }} - @{{ comment.created_at }}
+                                @{{ comment.user.name }} - @{{ comment.created_at }}
                                 <div class="commentBox"> @{{ comment.content }} </div>
                             </div>
 

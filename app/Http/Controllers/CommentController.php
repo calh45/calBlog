@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Activity;
 use App\Comment;
 use App\Post;
 use Illuminate\Http\Request;
@@ -10,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class CommentController extends Controller
 {
     public function apiIndex($postId) {
-        $commentsToReturn = Comment::all()->where("post_id", $postId);
+        $commentsToReturn = Comment::with("user")->where("post_id", $postId)->get();
 
         return $commentsToReturn;
 
@@ -27,6 +28,8 @@ class CommentController extends Controller
         $newComment->post_id = $postId;
         $newComment->content = $validatedData["name"];
         $newComment->save();
+
+        $this->createActivity($validatedData["name"], $postId, $userId);
 
         return $newComment;
     }
@@ -71,5 +74,14 @@ class CommentController extends Controller
         $allPosts = Post::paginate(10);
         $currentLoggedIn = Auth::user();
         return view("home", ["allPosts" => $allPosts, "currentLoggedIn" => $currentLoggedIn]);
+    }
+
+    public function createActivity($content, $postId, $userId) {
+        $activityToCreate = new Activity();
+        $activityToCreate->activity_type="Comment";
+        $activityToCreate->content=$content;
+        $activityToCreate->user_id=$userId;
+        $activityToCreate->post_id=$postId;
+        $activityToCreate->save();
     }
 }

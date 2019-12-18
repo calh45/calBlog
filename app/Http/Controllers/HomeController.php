@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Post;
 use App\User;
 use Illuminate\Http\Request;
@@ -29,8 +30,9 @@ class HomeController extends Controller
 
         $user = Auth::user();
         $allPosts = Post::paginate(10);
+        $categories = Category::all();
 
-        return view('home', ['currentLoggedIn' => $user, "allPosts" => $allPosts]);
+        return view('home', ['currentLoggedIn' => $user, "allPosts" => $allPosts, "categories" => $categories]);
     }
 
 

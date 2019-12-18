@@ -33,4 +33,8 @@ class Post extends Model
     public function activity() {
         return $this->hasOne("App\Activity", "post_id", "id");
     }
+
+    public function categories() {
+        return $this->belongsToMany("App\Category", "category_post", "post_id", "category_id");
+    }
 }

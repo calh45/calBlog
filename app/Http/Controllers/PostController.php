@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Activity;
+use App\Category;
 use App\Comment;
 use App\Image;
 use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
@@ -28,9 +31,18 @@ class PostController extends Controller
         $newContent = $validatedData["newPost"];
         Post::all()->where("id", $request->input("postId"))->first()->update(["content" => $newContent]);
 
+        $postToEdit = Post::all()->where("id", $request->input("postId"))->first();
+        $categoriesToDelete = DB::table("category_post")->where("post_id", $postToEdit->id);
+        $categoriesToDelete->delete();
+
+        foreach ($_POST['editCategories'] as $categories) {
+            $postToEdit->categories()->attach($categories);
+        }
+
         $allPosts = Post::paginate(10);
         $currentLoggedIn = Auth::user();
-        return view("home", ["allPosts" => $allPosts, "currentLoggedIn" => $currentLoggedIn]);
+        $categories = Category::all();
+        return view("home", ["allPosts" => $allPosts, "currentLoggedIn" => $currentLoggedIn, "categories" => $categories]);
     }
 
     public function create(Request $request) {
@@ -56,6 +68,8 @@ class PostController extends Controller
             $newPost->image_id = $imageModelToSave->id;
             $newPost->save();
 
+            $this->createActivity($validatedData["postContent"], $newPost->id);
+
         }else {
             $newPost = new Post();
             $newPost->user_Id = Auth::user()->getAuthIdentifier();
@@ -64,12 +78,23 @@ class PostController extends Controller
             $newPost->image_id = null;
             $newPost->save();
 
+            $this->createActivity($validatedData["postContent"], $newPost->id);
+
         }
+
+
+        if(isset($_POST['categories'])) {
+            foreach ($_POST['categories'] as $categories) {
+                $newPost->categories()->attach($categories);
+            }
+        }
+
 
 
         $allPosts = Post::paginate(10);
         $currentLoggedIn = Auth::user();
-        return view("home", ["allPosts" => $allPosts, "currentLoggedIn" => $currentLoggedIn]);
+        $categories = Category::all();
+        return view("home", ["allPosts" => $allPosts, "currentLoggedIn" => $currentLoggedIn, "categories" => $categories]);
 
     }
 
@@ -80,6 +105,16 @@ class PostController extends Controller
 
         $allPosts = Post::paginate(10);
         $currentLoggedIn = Auth::user();
-        return view("home", ["allPosts" => $allPosts, "currentLoggedIn" => $currentLoggedIn]);
+        $categories = Category::all();
+        return view("home", ["allPosts" => $allPosts, "currentLoggedIn" => $currentLoggedIn, "categories" => $categories]);
+    }
+
+    public function createActivity($content, $postId) {
+        $activityToCreate = new Activity();
+        $activityToCreate->activity_type="Post";
+        $activityToCreate->content=$content;
+        $activityToCreate->user_id=Auth::user()->getAuthIdentifier();
+        $activityToCreate->post_id=$postId;
+        $activityToCreate->save();
     }
 }

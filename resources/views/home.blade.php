@@ -20,6 +20,12 @@
                             <input type="file" id="imageSave" name="imageSave" >
                             <input type="checkbox" name="imageUpload"> Upload with Image
                             <button class="postButton" type="submit"> Post </button>
+                            <div class="categoryBanner">Categories:</div>
+                            <div class="categoryContainer">
+                                @foreach($categories as $currentCategory)
+                                    <input type="checkbox" value="{{ $currentCategory->id }}" id="{{ $currentCategory->id }}" name="categories[]"> {{ $currentCategory->name }}
+                                @endforeach
+                            </div>
 
                         </form>
                     </div>
@@ -45,6 +51,14 @@
                             @if($currentPost->postType == "image")
                                 <img src="/images/{{ $currentPost->image->fileName }}" alt="Image">
                             @endif
+
+                            <div class="categoryDisplay">
+                                Categories:
+                                @foreach($currentPost->categories as $currentCategory)
+                                    {{ $currentCategory->name }} ,
+
+                                @endforeach
+                            </div>
 
 
                         </div>
@@ -100,6 +114,11 @@
                                             {{ csrf_field() }}
                                             <input name="postId" type="hidden" value={{ $currentPost->id }}>
                                             <input name="newPost" id="newPost" placeholder="{{ $currentPost->content }}">
+                                            <div class="categoryContainer">
+                                                @foreach($categories as $currentCategory)
+                                                    <input type="checkbox" value="{{ $currentCategory->id }}" id="{{ $currentCategory->id }}" name="editCategories[]"> {{ $currentCategory->name }}
+                                                @endforeach
+                                            </div>
                                             <button type="submit"> Edit Post </button>
                                         </form>
                                     </div>
