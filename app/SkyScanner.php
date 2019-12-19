@@ -2,7 +2,7 @@
 
 namespace App;
 
-class Twitter {
+class SkyScanner {
 
     private $apiKey;
 

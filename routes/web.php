@@ -10,11 +10,11 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-use App\Twitter;
+use App\SkyScanner;
 
 
-app()->singleton("App\Twitter", function ($app) {
-    return new Twitter("e336e76e-020a-4821-a699-72fe7f88c38b");
+app()->singleton("App\SkyScanner", function ($app) {
+    return new SkyScanner("e336e76e-020a-4821-a699-72fe7f88c38b");
 });
 
 
