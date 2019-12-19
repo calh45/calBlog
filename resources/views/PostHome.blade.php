@@ -133,7 +133,7 @@
                             this.comments = response.data;
                         }).catch(response => {
                             console.log(response);
-                        })
+                        });
                         this.content = '';
                     }).catch(response => {
                         console.log(response);

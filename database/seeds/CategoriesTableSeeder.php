@@ -11,8 +11,10 @@ class CategoriesTableSeeder extends Seeder
      */
     public function run()
     {
+        //List of Category tags
         $listToMake = ["Comedy", "Advice", "Academic", "Outdoor", "Lifestyle"];
 
+        //Create Category model for each Category tag
         foreach ($listToMake as $currentName) {
             $toAdd = new \App\Category();
             $toAdd->name = $currentName;

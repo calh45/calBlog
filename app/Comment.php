@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Comment extends Model
 {
 
+
     protected $fillable = [
         "content"
     ];
@@ -27,6 +28,10 @@ class Comment extends Model
         return $this->belongsTo("App\Post", "post_id", "id");
     }
 
+    /**
+     * Create one-to-one relationship with Activity model
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function activity() {
         return $this->hasOne("App\Activity", "post_id", "id");
     }

@@ -26,14 +26,26 @@ class Post extends Model
         return $this->hasMany("App\Comment", "post_id", "id");
     }
 
+    /**
+     * Complete one-to-one relationship with Image model
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function image() {
         return $this->belongsTo("App\Image", "image_id", "id");
     }
 
+    /**
+     * Create one-to-one relationship with Activity model
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function activity() {
         return $this->hasOne("App\Activity", "post_id", "id");
     }
 
+    /**
+     * Complete many-to-many relationship with Category model
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function categories() {
         return $this->belongsToMany("App\Category", "category_post", "post_id", "category_id");
     }
